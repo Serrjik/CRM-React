@@ -1,7 +1,5 @@
 import React from "react";
 
-import { Link } from "react-router-dom";
-
 export default function OrderTable(props) {
   return (
     <div className="table-responsive">

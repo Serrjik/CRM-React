@@ -9,8 +9,7 @@ import useDatabase from "../../database/useDatabase";
 
 import OrderManagerPage from "../OrderManager/OrderManagerPage";
 
-import { Switch, Route, Redirect, useHistory } from "react-router-dom";
-
+import { useHistory } from "react-router-dom";
 
 export default function ManagerPage({ page }) {
   const history = useHistory()
