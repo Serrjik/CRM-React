@@ -5,6 +5,9 @@ export default function Filters(props) {
   const [order, setOrder] = useState("");
   const [status, setStatus] = useState("");
   const [minPrice, setMinPrice] = useState("");
+  const [maxPrice, setMaxPrice] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [finalDate, setFinalDate] = useState("");
 
   useEffect(() => {
     const filters = []
@@ -37,8 +40,29 @@ export default function Filters(props) {
       })
     }
 
+    if (maxPrice) {
+      filters.push({
+        type: 'maxPrice',
+        content: maxPrice
+      })
+    }
+
+    if (startDate) {
+      filters.push({
+        type: 'startDate',
+        content: startDate
+      })
+    }
+
+    if (finalDate) {
+      filters.push({
+        type: 'finalDate',
+        content: finalDate
+      })
+    }
+
     props.onFilter(filters)
-  }, [props.onFilter, userName, order, status, minPrice])
+  }, [props.onFilter, userName, order, status, minPrice, maxPrice, startDate, finalDate])
 
   return (
     <div className="form-row p-2">
@@ -52,13 +76,15 @@ export default function Filters(props) {
           placeholder="ФИО"
         />
       </div>
+
       <div className="form-group col">
         <label>Заказ:</label>
-        <select 
+        <select
+        value={order}
           className="form-control"
           onChange={e => setOrder(e.target.value)}
         >
-          <option value="" selected>Все</option>
+          <option value="" defaultValue>Все</option>
           <option value="Принтер">Принтер</option>
           <option value="Бумага для принтера">Бумага для принтера</option>
           <option value="Краски для принтера">Краски для принтера</option>
@@ -66,12 +92,14 @@ export default function Filters(props) {
           <option value="Полимерная ванна">Полимерная ванна</option>
         </select>
       </div>
-      <div 
-        className="form-group col"
-        onChange={e => setStatus(e.target.value)}
-      >
+
+      <div className="form-group col" >
         <label>Статус:</label>
-        <select className="form-control">
+        <select
+          value={status}
+          className="form-control"
+          onChange={e => setStatus(e.target.value)}
+        >
           <option defaultValue>Все</option>
           <option>Новые</option>
           <option>На исполнение</option>
@@ -79,21 +107,43 @@ export default function Filters(props) {
           <option>Заархивированные</option>
         </select>
       </div>
+
       <div className="form-group col">
         <label>Сумма:</label>
-        <input 
-          className="form-control" 
-          type="number" 
-          min="0" 
-          placeholder="От" 
+        <input
+          value={minPrice}
+          className="form-control"
+          type="number"
+          min="0"
+          placeholder="От"
           onChange={e => setMinPrice(e.target.value)}
         />
-        <input className="form-control" type="number" min="0" placeholder="До" />
+
+        <input
+          value={maxPrice}
+          className="form-control"
+          type="number"
+          min="0"
+          placeholder="До"
+          onChange={e => setMaxPrice(e.target.value)}
+        />
       </div>
+
       <div className="form-group col">
         <label>Дата:</label>
-        <input className="form-control" type="date" />
-        <input className="form-control" type="date" />
+        <input 
+          value={startDate}
+          className="form-control" 
+          type="date"
+          onChange={e => setStartDate(e.target.value)}
+        />
+
+        <input 
+          value={finalDate}
+          className="form-control" 
+          type="date" 
+          onChange={e => setFinalDate(e.target.value)}
+        />
       </div>
     </div>
   );
