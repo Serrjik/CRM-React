@@ -15,10 +15,39 @@ export default function ManagerPage({ page }) {
   const history = useHistory()
   const { getOrders } = useDatabase();
 
-  const [filtredOrders, setFiltredOrders] = useState(getOrders());
+  const [filtredOrders, setFiltredOrders] = useState(getOrders(0, 1000));
 
-  const handlerFilter = (filters) => {
-    console.log(filters);
+  const handlerFilter = filters => {
+    // console.log(filters);
+
+// 0: {type: "name", content: "Тимофей "}
+// 1: {type: "order", content: "Принтер"}
+// 2: {type: "status", content: "Новые"}
+// 3: {type: "minPrice", content: "1"}
+// 4: {type: "maxPrice", content: "5"}
+// 5: {type: "startDate", content: "2020-09-06"}
+// 6: {type: "finalDate", content: "2020-10-01"}
+
+    const orders = [...filtredOrders]
+    // console.log(orders)
+
+// date: 1582739937251
+// fullname: "Тимофей Черешников 1"
+// good: "Бумага для принтера"
+// id: 1
+// price: 500
+// status: "process"
+
+    for (const filter of filters) {
+      if (filter.name === 'name') {
+        console.log('filter by name fired')
+        orders = orders.filter(order => {
+          return order.fullname.toLowerCase().startsWith(filter.content.toLowerCase())
+        })
+      }
+    }
+
+    setFiltredOrders([...orders])
   };
 
   const handlerEdit = (orderId) => {
