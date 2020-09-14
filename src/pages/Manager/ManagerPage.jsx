@@ -28,7 +28,8 @@ export default function ManagerPage({ page }) {
 // 5: {type: "startDate", content: "2020-09-06"}
 // 6: {type: "finalDate", content: "2020-10-01"}
 
-    const orders = [...filtredOrders]
+    let orders = []
+    // const orders = [...filtredOrders]
     // console.log(orders)
 
 // date: 1582739937251
@@ -39,13 +40,16 @@ export default function ManagerPage({ page }) {
 // status: "process"
 
     for (const filter of filters) {
-      if (filter.name === 'name') {
+      if (filter.type === 'name') {
         console.log('filter by name fired')
-        orders = orders.filter(order => {
+
+        orders = filtredOrders.filter(order => {
           return order.fullname.toLowerCase().startsWith(filter.content.toLowerCase())
         })
       }
     }
+
+    // console.log(orders)
 
     setFiltredOrders([...orders])
   };
@@ -61,9 +65,9 @@ export default function ManagerPage({ page }) {
       // output = 'Редактирование заказа'
       output = <OrderManagerPage />
       break;
-  
+
     default:
-      output = 
+      output =
         <main
           role="main"
           className="col-md-9 ml-sm-auto col-lg-10 px-4 d-flex flex-column"
