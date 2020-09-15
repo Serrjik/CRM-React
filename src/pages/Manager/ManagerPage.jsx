@@ -1,5 +1,5 @@
 // Страница "Заказы" (стартовая).
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 
 import MainWrapper from "../MainWrapper";
 import Filters from "./Filters";
@@ -10,6 +10,8 @@ import useDatabase from "../../database/useDatabase";
 import OrderManagerPage from "../OrderManager/OrderManagerPage";
 
 import { useHistory } from "react-router-dom";
+
+import Context from "../../database/Context";
 
 export default function ManagerPage({ page }) {
   const history = useHistory()
@@ -51,12 +53,18 @@ export default function ManagerPage({ page }) {
 
     // console.log(orders)
 
-    setFiltredOrders([...orders])
+    // setFiltredOrders([...orders])
   };
 
   const handlerEdit = (orderId) => {
     history.push(`/order/${orderId}`)
   };
+
+  // Пагинация.
+  // Количество страниц.
+  const value = useContext(Context);
+  const maxOrders = value.state.maxOrders
+  const commonPages = Math.ceil(filtredOrders.length / maxOrders)
 
   let output = null
 
@@ -78,7 +86,7 @@ export default function ManagerPage({ page }) {
 
           <Filters onFilter={handlerFilter} />
           <OrderTable onEdit={handlerEdit} orders={filtredOrders} />
-          <Pagination />
+          <Pagination commonPages={commonPages} />
         </main>
       break;
   }
