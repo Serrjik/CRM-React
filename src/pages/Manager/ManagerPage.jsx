@@ -61,9 +61,10 @@ export default function ManagerPage({ page }) {
   };
 
   // Пагинация.
-  // Количество страниц.
   const value = useContext(Context);
+  // Максимальное количество заказов на странице.
   const maxOrders = value.state.maxOrders
+  // Количество страниц.
   const commonPages = Math.ceil(filtredOrders.length / maxOrders)
 
   let output = null
