@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 
-export default function Pagination({ commonPages }) {
-  const [currentPage, setCurrentPage] = useState(1)
+export default function Pagination({ commonPages, currentPage, setCurrentPage }) {
 
   const getPrevPage = () => {
     if (currentPage !== 1) {

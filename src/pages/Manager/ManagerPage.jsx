@@ -14,10 +14,21 @@ import { useHistory } from "react-router-dom";
 import Context from "../../database/Context";
 
 export default function ManagerPage({ page }) {
+  // Пагинация.
+  const [currentPage, setCurrentPage] = useState(1)
+  console.log('currentPage: ', currentPage);
+  
+  const value = useContext(Context);
+  // Максимальное количество заказов на странице.
+  const maxOrders = value.state.maxOrders
+
   const history = useHistory()
   const { getOrders } = useDatabase();
 
-  const [filtredOrders, setFiltredOrders] = useState(getOrders(0, 1000));
+  const initialOrderNumber = (currentPage - 1) * maxOrders
+  const finalOrderNumber = currentPage * maxOrders
+
+  const [filtredOrders, setFiltredOrders] = useState(getOrders(initialOrderNumber, finalOrderNumber));
 
   const handlerFilter = filters => {
     // console.log(filters);
@@ -60,10 +71,6 @@ export default function ManagerPage({ page }) {
     history.push(`/order/${orderId}`)
   };
 
-  // Пагинация.
-  const value = useContext(Context);
-  // Максимальное количество заказов на странице.
-  const maxOrders = value.state.maxOrders
   // Количество страниц.
   const commonPages = Math.ceil(filtredOrders.length / maxOrders)
 
@@ -87,7 +94,7 @@ export default function ManagerPage({ page }) {
 
           <Filters onFilter={handlerFilter} />
           <OrderTable onEdit={handlerEdit} orders={filtredOrders} />
-          <Pagination commonPages={commonPages} />
+          <Pagination commonPages={commonPages} currentPage={currentPage} setCurrentPage={setCurrentPage} />
         </main>
       break;
   }
