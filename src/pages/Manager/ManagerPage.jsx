@@ -1,5 +1,5 @@
 // Страница "Заказы" (стартовая).
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 
 import MainWrapper from "../MainWrapper";
 import Filters from "./Filters";
@@ -25,10 +25,26 @@ export default function ManagerPage({ page }) {
   const history = useHistory()
   const { getOrders } = useDatabase();
 
+  // offset и limit
   const initialOrderNumber = (currentPage - 1) * maxOrders
   const finalOrderNumber = currentPage * maxOrders
 
-  const [filtredOrders, setFiltredOrders] = useState(getOrders(initialOrderNumber, finalOrderNumber));
+  let orders = getOrders(0, 1000)
+
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     // You can await here
+  //     orders = await getOrders(0, 1000)
+  //     // ...
+  //   }
+  //   fetchData()
+  // },
+  //   []
+  // )
+
+  // console.log('orders: ', getOrders(0, 1000));
+
+  const [filtredOrders, setFiltredOrders] = useState(orders);
 
   const handlerFilter = filters => {
     // console.log(filters);
@@ -41,7 +57,7 @@ export default function ManagerPage({ page }) {
 // 5: {type: "startDate", content: "2020-09-06"}
 // 6: {type: "finalDate", content: "2020-10-01"}
 
-    let orders = []
+    // let orders = []
     // const orders = [...filtredOrders]
     // console.log(orders)
 
@@ -51,12 +67,13 @@ export default function ManagerPage({ page }) {
 // id: 1
 // price: 500
 // status: "process"
+const selectedOrders = []
 
     for (const filter of filters) {
       if (filter.type === 'name') {
         console.log('filter by name fired')
 
-        orders = filtredOrders.filter(order => {
+        selectedOrders = orders.filter(order => {
           return order.fullname.toLowerCase().startsWith(filter.content.toLowerCase())
         })
       }
@@ -64,7 +81,7 @@ export default function ManagerPage({ page }) {
 
     // console.log(orders)
 
-    // setFiltredOrders([...orders])
+    setFiltredOrders([...selectedOrders])
   };
 
   const handlerEdit = (orderId) => {
