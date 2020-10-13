@@ -61,8 +61,9 @@ export default function Filters(props) {
       })
     }
 
+    // console.log('filter')
     props.onFilter(filters)
-  }, [props.onFilter, userName, order, status, minPrice, maxPrice, startDate, finalDate])
+  }, [userName, order, status, minPrice, maxPrice, startDate, finalDate])
 
   return (
     <div className="form-row p-2">
@@ -100,11 +101,11 @@ export default function Filters(props) {
           className="form-control"
           onChange={e => setStatus(e.target.value)}
         >
-          <option defaultValue>Все</option>
-          <option>Новые</option>
-          <option>На исполнение</option>
-          <option>Возврат</option>
-          <option>Заархивированные</option>
+          <option value="" defaultValue>Все</option>
+          <option value="new">Новые</option>
+          <option value="process">На исполнение</option>
+          <option value="back">Возврат</option>
+          <option value="archived">Заархивированные</option>
         </select>
       </div>
 

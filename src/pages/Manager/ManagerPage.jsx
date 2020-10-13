@@ -20,68 +20,91 @@ export default function ManagerPage({ page }) {
   
   const value = useContext(Context);
   // Максимальное количество заказов на странице.
-  const maxOrders = value.state.maxOrders
+  const limit = value.state.maxOrders
 
   const history = useHistory()
   const { getOrders } = useDatabase();
 
-  // offset и limit
-  const initialOrderNumber = (currentPage - 1) * maxOrders
-  const finalOrderNumber = currentPage * maxOrders
+  // С какого заказа отображать заказы на выбранной странице.
+  const offset = (currentPage - 1) * limit
 
-  let orders = getOrders(0, 1000)
-
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     // You can await here
-  //     orders = await getOrders(0, 1000)
-  //     // ...
-  //   }
-  //   fetchData()
-  // },
-  //   []
-  // )
-
+  const orders = getOrders(0, 20)
   // console.log('orders: ', getOrders(0, 1000));
-
-  const [filtredOrders, setFiltredOrders] = useState(orders);
-
+  const [displayedOrders, setDisplayedOrders] = useState([...orders])
+  
   const handlerFilter = filters => {
+    let filteredOrders = [...orders]
+    // filteredOrders = [...orders]
+
     // console.log(filters);
 
-// 0: {type: "name", content: "Тимофей "}
-// 1: {type: "order", content: "Принтер"}
-// 2: {type: "status", content: "Новые"}
-// 3: {type: "minPrice", content: "1"}
-// 4: {type: "maxPrice", content: "5"}
-// 5: {type: "startDate", content: "2020-09-06"}
-// 6: {type: "finalDate", content: "2020-10-01"}
+    // 0: {type: "name", content: "Тимофей "}
+    // 1: {type: "order", content: "Принтер"}
+    // 2: {type: "status", content: "Новые"}
+    // 3: {type: "minPrice", content: "1"}
+    // 4: {type: "maxPrice", content: "5"}
+    // 5: {type: "startDate", content: "2020-09-06"}
+    // 6: {type: "finalDate", content: "2020-10-01"}
 
-    // let orders = []
-    // const orders = [...filtredOrders]
-    // console.log(orders)
-
-// date: 1582739937251
-// fullname: "Тимофей Черешников 1"
-// good: "Бумага для принтера"
-// id: 1
-// price: 500
-// status: "process"
-const selectedOrders = []
+    // date: 1582739937251
+    // fullname: "Тимофей Черешников 1"
+    // good: "Бумага для принтера"
+    // id: 1
+    // price: 500
+    // status: "process"
+    
+    console.log('filters: ', filters);
 
     for (const filter of filters) {
       if (filter.type === 'name') {
         console.log('filter by name fired')
 
-        selectedOrders = orders.filter(order => {
-          return order.fullname.toLowerCase().startsWith(filter.content.toLowerCase())
+        filteredOrders = filteredOrders.filter(order => order.fullname.toLowerCase().startsWith(filter.content.toLowerCase()))
+      }
+
+      if (filter.type === 'order') {
+        console.log('filter by order fired')
+
+        filteredOrders = filteredOrders.filter(order => order.good.toLowerCase() === filter.content.toLowerCase())
+      }
+
+      if (filter.type === 'status') {
+        console.log('filter by status fired')
+
+        filteredOrders = filteredOrders.filter(order => order.status.toLowerCase() === filter.content.toLowerCase())
+      }
+
+      if (filter.type === 'minPrice') {
+        console.log('filter by minPrice fired')
+
+        filteredOrders = filteredOrders.filter(order => order.price >= filter.content)
+      }
+
+      if (filter.type === 'maxPrice') {
+        console.log('filter by order maxPrice')
+
+        filteredOrders = filteredOrders.filter(order => order.price <= filter.content)
+      }
+
+      if (filter.type === 'startDate') {
+        console.log('filter by startDate fired')
+
+        
+        filteredOrders = filteredOrders.filter(order => {
+          console.log('Date.parse(filter.content): ', Date.parse(filter.content));
+          return order.date >= Date.parse(filter.content)
         })
       }
+
+      if (filter.type === 'finalDate') {
+        console.log('filter by finalDate fired')
+
+        filteredOrders = filteredOrders.filter(order => Date.parse(order.date) <= filter.content)
+      }
     }
-
-    // console.log(orders)
-
-    setFiltredOrders([...selectedOrders])
+    
+    console.log('filteredOrders: ', filteredOrders);
+    setDisplayedOrders([...filteredOrders])
   };
 
   const handlerEdit = (orderId) => {
@@ -89,7 +112,7 @@ const selectedOrders = []
   };
 
   // Количество страниц.
-  const commonPages = Math.ceil(filtredOrders.length / maxOrders)
+  // const commonPages = Math.ceil(filtredOrders.length / limit)
 
   let output = null
 
@@ -110,8 +133,8 @@ const selectedOrders = []
           </div>
 
           <Filters onFilter={handlerFilter} />
-          <OrderTable onEdit={handlerEdit} orders={filtredOrders} />
-          <Pagination commonPages={commonPages} currentPage={currentPage} setCurrentPage={setCurrentPage} />
+          <OrderTable onEdit={handlerEdit} orders={displayedOrders} />
+          <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} /> {/* commonPages={commonPages} */}
         </main>
       break;
   }

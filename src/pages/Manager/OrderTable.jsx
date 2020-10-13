@@ -28,6 +28,9 @@ export default function OrderTable(props) {
 const Tr = (props) => {
   const { order } = props;
 
+  // Форматтер даты.
+  const dateFormatter = new Intl.DateTimeFormat('ru-Ru')
+  
   return (
     <tr>
       <td>{order.id}</td>
@@ -47,7 +50,7 @@ const Tr = (props) => {
           {/* Редактировать */}
         </button>
       </td>
-      <td>{order.date}</td>
+      <td>{dateFormatter.format(order.date)}</td>
     </tr>
   );
 };
