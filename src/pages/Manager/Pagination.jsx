@@ -23,7 +23,7 @@ export default function Pagination({ commonPages, currentPage, setCurrentPage })
       // onClick={() => currentPage = props.pageNumber}
       onClick={() => setCurrentPage(props.pageNumber)}
     >
-      <a className="page-link" href="#">
+      <a className="page-link" href="/">
         {props.pageNumber}
       </a>
     </li>
@@ -45,7 +45,7 @@ export default function Pagination({ commonPages, currentPage, setCurrentPage })
           className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}
           onClick={getPrevPage}
           >
-          <a className="page-link" href="#" tabIndex="-1" aria-disabled="true">
+          <a className="page-link" href="/" tabIndex="-1" aria-disabled="true">
             Назад
           </a>
         </li>
@@ -53,19 +53,19 @@ export default function Pagination({ commonPages, currentPage, setCurrentPage })
         {paginationItems.map(item => item)}
 
         {/* <li className="page-item active">
-          <a className="page-link" href="#">
+          <a className="page-link" href="/">
             1
           </a>
         </li>
 
         <li className="page-item">
-          <a className="page-link" href="#">
+          <a className="page-link" href="/">
             2
           </a>
         </li>
 
         <li className="page-item">
-          <a className="page-link" href="#">
+          <a className="page-link" href="/">
             3
           </a>
         </li> */}
@@ -74,7 +74,7 @@ export default function Pagination({ commonPages, currentPage, setCurrentPage })
           className={`page-item ${currentPage === commonPages ? 'disabled' : ''}`}
           onClick={getNextPage}
         >
-          <a className="page-link" href="#">
+          <a className="page-link" href="/">
             Вперед
           </a>
         </li>

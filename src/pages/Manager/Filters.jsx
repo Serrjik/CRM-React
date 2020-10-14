@@ -89,7 +89,7 @@ export default function Filters(props) {
           <option value="Принтер">Принтер</option>
           <option value="Бумага для принтера">Бумага для принтера</option>
           <option value="Краски для принтера">Краски для принтера</option>
-          <option value="Катриджи для принтера">Катриджи для принтера</option>
+          <option value="Картриджи для принтера">Картриджи для принтера</option>
           <option value="Полимерная ванна">Полимерная ванна</option>
         </select>
       </div>

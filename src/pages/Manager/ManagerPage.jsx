@@ -16,7 +16,7 @@ import Context from "../../database/Context";
 export default function ManagerPage({ page }) {
   // Пагинация.
   const [currentPage, setCurrentPage] = useState(1)
-  console.log('currentPage: ', currentPage);
+  // console.log('currentPage: ', currentPage);
   
   const value = useContext(Context);
   // Максимальное количество заказов на странице.
@@ -34,9 +34,6 @@ export default function ManagerPage({ page }) {
   
   const handlerFilter = filters => {
     let filteredOrders = [...orders]
-    // filteredOrders = [...orders]
-
-    // console.log(filters);
 
     // 0: {type: "name", content: "Тимофей "}
     // 1: {type: "order", content: "Принтер"}
@@ -57,53 +54,34 @@ export default function ManagerPage({ page }) {
 
     for (const filter of filters) {
       if (filter.type === 'name') {
-        console.log('filter by name fired')
-
         filteredOrders = filteredOrders.filter(order => order.fullname.toLowerCase().startsWith(filter.content.toLowerCase()))
       }
 
       if (filter.type === 'order') {
-        console.log('filter by order fired')
-
         filteredOrders = filteredOrders.filter(order => order.good.toLowerCase() === filter.content.toLowerCase())
       }
 
       if (filter.type === 'status') {
-        console.log('filter by status fired')
-
         filteredOrders = filteredOrders.filter(order => order.status.toLowerCase() === filter.content.toLowerCase())
       }
 
       if (filter.type === 'minPrice') {
-        console.log('filter by minPrice fired')
-
         filteredOrders = filteredOrders.filter(order => order.price >= filter.content)
       }
 
       if (filter.type === 'maxPrice') {
-        console.log('filter by order maxPrice')
-
         filteredOrders = filteredOrders.filter(order => order.price <= filter.content)
       }
 
       if (filter.type === 'startDate') {
-        console.log('filter by startDate fired')
-
-        
-        filteredOrders = filteredOrders.filter(order => {
-          console.log('Date.parse(filter.content): ', Date.parse(filter.content));
-          return order.date >= Date.parse(filter.content)
-        })
+        filteredOrders = filteredOrders.filter(order => order.date >= Date.parse(filter.content))
       }
 
       if (filter.type === 'finalDate') {
-        console.log('filter by finalDate fired')
-
-        filteredOrders = filteredOrders.filter(order => Date.parse(order.date) <= filter.content)
+        filteredOrders = filteredOrders.filter(order => order.date <= Date.parse(filter.content))
       }
     }
     
-    console.log('filteredOrders: ', filteredOrders);
     setDisplayedOrders([...filteredOrders])
   };
 

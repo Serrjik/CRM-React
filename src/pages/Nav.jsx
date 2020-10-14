@@ -13,7 +13,7 @@ export default function Nav() {
 
         <ul className="nav flex-column">
           <li className="nav-item">
-            <a className="nav-link active" href="#">
+            <a className="nav-link active" href="/">
               <img
                 src="./assets/data-collection.png"
                 alt=""
@@ -23,25 +23,25 @@ export default function Nav() {
             </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="#">
+            <a className="nav-link" href="/">
               <img src="./assets/new.png" alt="" style={{width: "30px"}} />
               Новые
             </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="#">
+            <a className="nav-link" href="/">
               <img src="./assets/innovation.png" alt="" style={{width: "30px"}} />
               На исполнение
             </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="#">
+            <a className="nav-link" href="/">
               <img src="./assets/back.png" alt="" style={{width: "30px"}} />
               Возврат
             </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="#">
+            <a className="nav-link" href="/">
               <img src="./assets/compressed.png" alt="" style={{width: "30px"}} />
               Заархивированные
             </a>
@@ -53,25 +53,25 @@ export default function Nav() {
         </h6>
         <ul className="nav flex-column mb-2">
           <li className="nav-item">
-            <a className="nav-link" href="#">
+            <a className="nav-link" href="/">
               <img src="./assets/arrow.png" alt="" style={{width: "30px"}} />
               Максим Анатольевич
             </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="#">
+            <a className="nav-link" href="/">
               <img src="./assets/arrow.png" alt="" style={{width: "30px"}} />
               Серьгей Дмитриевич
             </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="#">
+            <a className="nav-link" href="/">
               <img src="./assets/arrow.png" alt="" style={{width: "30px"}} />
               Ольга Арбузова
             </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="#">
+            <a className="nav-link" href="/">
               <img src="./assets/arrow.png" alt="" style={{width: "30px"}} />
               Максимус Валькиш
             </a>
