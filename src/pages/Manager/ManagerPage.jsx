@@ -9,14 +9,18 @@ import useDatabase from "../../database/useDatabase";
 
 import OrderManagerPage from "../OrderManager/OrderManagerPage";
 
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
 import Context from "../../database/Context";
 
 export default function ManagerPage({ page }) {
   // Пагинация.
   const [currentPage, setCurrentPage] = useState(1)
-  // console.log('currentPage: ', currentPage);
+  console.log('currentPage: ', currentPage);
+
+  const params = useParams();
+  const pageNumber = parseInt(params.pageNumber);
+  console.log('pageNumber: ', pageNumber);
   
   const value = useContext(Context);
   // Максимальное количество заказов на странице.
@@ -50,7 +54,7 @@ export default function ManagerPage({ page }) {
     // price: 500
     // status: "process"
     
-    console.log('filters: ', filters);
+    // console.log('filters: ', filters);
 
     for (const filter of filters) {
       if (filter.type === 'name') {
