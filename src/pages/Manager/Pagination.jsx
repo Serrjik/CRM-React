@@ -1,27 +1,12 @@
 import React, { useState } from "react";
 
-export default function Pagination({ commonPages, currentPage, setCurrentPage }) {
-
-  const getPrevPage = () => {
-    if (currentPage !== 1) {
-      setCurrentPage(currentPage => currentPage - 1)
-      // return currentPage
-    }
-  }
-
-  const getNextPage = () => {
-    if (currentPage !== commonPages) {
-      setCurrentPage(currentPage => currentPage + 1)
-      // return currentPage
-    }
-  }
-  
+export default function Pagination({ onPagination, currentPage, commonPages }) {
   // Элемент пагинации с номером страницы.
   const PaginationItem = props => (
     <li 
       className={'page-item ' + (props.currentPage === props.pageNumber ? 'active' : '')}
       // onClick={() => currentPage = props.pageNumber}
-      onClick={() => setCurrentPage(props.pageNumber)}
+      onClick={() => onPagination(props.pageNumber)}
     >
       <a className="page-link" href="/">
         {props.pageNumber}
@@ -43,8 +28,8 @@ export default function Pagination({ commonPages, currentPage, setCurrentPage })
 
         <li 
           className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}
-          onClick={getPrevPage}
-          >
+          onClick={onPagination('prev')}
+        >
           <a className="page-link" href="/" tabIndex="-1" aria-disabled="true">
             Назад
           </a>
@@ -72,7 +57,7 @@ export default function Pagination({ commonPages, currentPage, setCurrentPage })
 
         <li 
           className={`page-item ${currentPage === commonPages ? 'disabled' : ''}`}
-          onClick={getNextPage}
+          onClick={onPagination('next')}
         >
           <a className="page-link" href="/">
             Вперед

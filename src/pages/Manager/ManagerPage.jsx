@@ -9,19 +9,14 @@ import useDatabase from "../../database/useDatabase";
 
 import OrderManagerPage from "../OrderManager/OrderManagerPage";
 
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 import Context from "../../database/Context";
 
 export default function ManagerPage({ page }) {
   // Пагинация.
   const [currentPage, setCurrentPage] = useState(1)
-  console.log('currentPage: ', currentPage);
 
-  const params = useParams();
-  const pageNumber = parseInt(params.pageNumber);
-  console.log('pageNumber: ', pageNumber);
-  
   const value = useContext(Context);
   // Максимальное количество заказов на странице.
   const limit = value.state.maxOrders
@@ -32,9 +27,13 @@ export default function ManagerPage({ page }) {
   // С какого заказа отображать заказы на выбранной странице.
   const offset = (currentPage - 1) * limit
 
-  const orders = getOrders(0, 20)
+  const orders = getOrders(0, 1000)
   // console.log('orders: ', getOrders(0, 1000));
+  // Заказы после фильтра.
   const [displayedOrders, setDisplayedOrders] = useState([...orders])
+  // Заказы, которые должны отрисоваться на странице при пагинации.
+  const [paginatedOrders, setPaginatedOrders] = useState([...displayedOrders])
+
   
   const handlerFilter = filters => {
     let filteredOrders = [...orders]
@@ -93,8 +92,32 @@ export default function ManagerPage({ page }) {
     history.push(`/order/${orderId}`)
   };
 
+  const handlerPagination = nextPage => {
+    if (nextPage === 'prev') {
+      setCurrentPage(currentPage => currentPage - 1)
+    }
+    
+    else if (nextPage === 'next') {
+      setCurrentPage(currentPage => currentPage + 1)
+    }
+
+    else if (typeof(nextPage) === 'number') {
+      setCurrentPage(nextPage)
+    }
+  }
+
   // Количество страниц.
-  // const commonPages = Math.ceil(filtredOrders.length / limit)
+  const commonPages = Math.ceil(displayedOrders.length / limit)
+  console.log('commonPages: ', commonPages);
+
+  useEffect(() => setPaginatedOrders(displayedOrders
+    .slice((currentPage - 1) * limit, 
+    currentPage * limit)),
+    [displayedOrders, currentPage]  
+  )
+    
+  console.log('displayedOrders: ', displayedOrders);
+  console.log('currentPage: ', currentPage);
 
   let output = null
 
@@ -115,8 +138,8 @@ export default function ManagerPage({ page }) {
           </div>
 
           <Filters onFilter={handlerFilter} />
-          <OrderTable onEdit={handlerEdit} orders={displayedOrders} />
-          <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} /> {/* commonPages={commonPages} */}
+          <OrderTable onEdit={handlerEdit} orders={paginatedOrders} />
+          <Pagination onPagination={handlerPagination} currentPage={currentPage} commonPages={commonPages} />
         </main>
       break;
   }

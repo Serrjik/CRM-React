@@ -35,7 +35,7 @@ export default function App({ page }) {
           {/* <Route path="/order/:orderId" render={() => <OrderManagerPage />} /> */}
 
           <Route path="/">
-            <ManagerPage path="/:pageNumber" />;
+            <ManagerPage />;
           </Route>
         </Switch>
 
