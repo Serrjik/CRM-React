@@ -2,8 +2,8 @@ import React from 'react'
 
 export default function OrderTable(props) {
 	return (
-		<div className='table-responsive'>
-			<table className='table table-striped'>
+		<div className="table-responsive">
+			<table className="table table-striped">
 				<thead>
 					<tr>
 						<th>id</th>
@@ -46,12 +46,10 @@ const Tr = props => {
 			</td>
 			<td>
 				<button
-					className='btn btn-outline-primary btn-sm'
+					className="btn btn-outline-primary btn-sm"
 					onClick={() => props.onEdit(order.id)}
 				>
 					Редактировать
-					{/* <Link to={`/order/${order.id}`}>Редактировать</Link> */}
-					{/* Редактировать */}
 				</button>
 			</td>
 			<td>{dateFormatter.format(order.date)}</td>
@@ -62,13 +60,13 @@ const Tr = props => {
 const Badge = props => {
 	switch (props.type) {
 		case 'process':
-			return <div className='badge badge-warning'>в обработке</div>
+			return <div className="badge badge-warning">в обработке</div>
 		case 'new':
-			return <div className='badge badge-primary'>новое</div>
+			return <div className="badge badge-primary">новое</div>
 		case 'archived':
-			return <div className='badge badge-dark'>архив</div>
+			return <div className="badge badge-dark">архив</div>
 		case 'back':
-			return <div className='badge badge-danger'>возврат</div>
+			return <div className="badge badge-danger">возврат</div>
 		default:
 			return null
 	}

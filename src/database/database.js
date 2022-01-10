@@ -1,4 +1,4 @@
-import React, { useReducer, useContext } from 'react'
+import React, { useReducer } from 'react'
 import orders from './orders.json'
 import reducer from './reducer'
 import { UPDATE_ORDER, CREATE_ORDER } from './Boilerplate'
@@ -19,6 +19,9 @@ export function DatabaseProvider(props) {
 	const getOrders = (offset = 0, limit = 10) =>
 		state.orders.slice(offset, offset + limit)
 
+	// Сколько всего заказов.
+	const getOrdersAmount = () => state.orders.length
+
 	const updateOrder = (id, data) =>
 		dispatch({
 			type: UPDATE_ORDER,
@@ -35,6 +38,7 @@ export function DatabaseProvider(props) {
 		state,
 		dispatch,
 		getOrders,
+		getOrdersAmount,
 		updateOrder,
 		getOrderById,
 		createOrder,

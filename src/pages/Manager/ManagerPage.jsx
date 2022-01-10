@@ -7,8 +7,6 @@ import OrderTable from './OrderTable'
 import Pagination from './Pagination'
 import useDatabase from '../../database/useDatabase'
 
-import OrderManagerPage from '../OrderManager/OrderManagerPage'
-
 import { useHistory } from 'react-router-dom'
 
 import Context from '../../database/Context'
@@ -22,13 +20,15 @@ export default function ManagerPage({ page }) {
 	const limit = value.state.maxOrders
 
 	const history = useHistory()
-	const { getOrders } = useDatabase()
+	const { getOrders, getOrdersAmount } = useDatabase()
 
+	// Всего заказов.
+	const ordersAmount = getOrdersAmount()
 	// С какого заказа отображать заказы на выбранной странице.
 	const offset = (currentPage - 1) * limit
 
-	const orders = getOrders(0, 1000)
-	console.log('orders: ', getOrders(0, 1000));
+	const orders = getOrders(offset, ordersAmount)
+	console.log('orders: ', orders)
 	// Заказы после фильтра.
 	const [displayedOrders, setDisplayedOrders] = useState([...orders])
 	// Заказы, которые должны отрисоваться на странице при пагинации.
@@ -123,7 +123,7 @@ export default function ManagerPage({ page }) {
 
 	// Количество страниц.
 	const commonPages = Math.ceil(displayedOrders.length / limit)
-	console.log('commonPages: ', commonPages)
+	// console.log('commonPages: ', commonPages)
 
 	useEffect(
 		() =>
@@ -133,7 +133,7 @@ export default function ManagerPage({ page }) {
 					currentPage * limit
 				)
 			),
-		[displayedOrders, currentPage]
+		[displayedOrders, currentPage, limit]
 	)
 
 	// console.log('displayedOrders: ', displayedOrders)
@@ -142,11 +142,11 @@ export default function ManagerPage({ page }) {
 	return (
 		<MainWrapper>
 			<main
-				role='main'
-				className='col-md-9 ml-sm-auto col-lg-10 px-4 d-flex flex-column'
+				role="main"
+				className="col-md-9 ml-sm-auto col-lg-10 px-4 d-flex flex-column"
 			>
-				<div className='d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom'>
-					<h1 className='h2'>Заказы</h1>
+				<div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+					<h1 className="h2">Заказы</h1>
 				</div>
 
 				<Filters onFilter={handlerFilter} />
@@ -160,11 +160,3 @@ export default function ManagerPage({ page }) {
 		</MainWrapper>
 	)
 }
-
-// Сделать чтобы при клике на "Редактировать мы попадали на форму редактирования".
-// Ориентироваться по id в адресной строке.
-// В функции handlerEdit компонента ManagerPage.
-
-// /order/1/edit
-
-// Фильтрация, пагинация, редактирование заполнить.

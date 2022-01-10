@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 export default function Pagination({ onPagination, currentPage, commonPages }) {
 	// Элемент пагинации с номером страницы.
@@ -8,12 +8,11 @@ export default function Pagination({ onPagination, currentPage, commonPages }) {
 				'page-item ' +
 				(props.currentPage === props.pageNumber ? 'active' : '')
 			}
-			// onClick={() => currentPage = props.pageNumber}
 			onClick={() => onPagination(props.pageNumber)}
 		>
-			<a className='page-link' href='/'>
+			<button className="page-link" href="/">
 				{props.pageNumber}
-			</a>
+			</button>
 		</li>
 	)
 
@@ -28,43 +27,25 @@ export default function Pagination({ onPagination, currentPage, commonPages }) {
 	}
 
 	return (
-		<nav aria-label='Page navigation example'>
-			<ul className='pagination justify-content-center'>
+		<nav aria-label="Page navigation example">
+			<ul className="pagination justify-content-center">
 				<li
 					className={`page-item ${
 						currentPage === 1 ? 'disabled' : ''
 					}`}
 					onClick={onPagination('prev')}
 				>
-					<a
-						className='page-link'
-						href='/'
-						tabIndex='-1'
-						aria-disabled='true'
+					<button
+						className="page-link"
+						href="/"
+						tabIndex="-1"
+						aria-disabled="true"
 					>
 						Назад
-					</a>
+					</button>
 				</li>
 
 				{paginationItems.map(item => item)}
-
-				{/* <li className="page-item active">
-          <a className="page-link" href="/">
-            1
-          </a>
-        </li>
-
-        <li className="page-item">
-          <a className="page-link" href="/">
-            2
-          </a>
-        </li>
-
-        <li className="page-item">
-          <a className="page-link" href="/">
-            3
-          </a>
-        </li> */}
 
 				<li
 					className={`page-item ${
@@ -72,9 +53,9 @@ export default function Pagination({ onPagination, currentPage, commonPages }) {
 					}`}
 					onClick={onPagination('next')}
 				>
-					<a className='page-link' href='/'>
+					<button className="page-link" href="/">
 						Вперед
-					</a>
+					</button>
 				</li>
 			</ul>
 		</nav>
