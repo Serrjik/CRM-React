@@ -11,11 +11,6 @@ export default function OrderFormPage() {
 	const goodRef = useRef()
 	const priceRef = useRef()
 
-	const { getOrders } = useDatabase()
-	const orders = getOrders(0, 1000)
-
-	console.log('orders: ', orders)
-
 	const makeOrder = () => {
 		const newOrder = {
 			fullname: fullnameRef.current.value,
@@ -24,44 +19,41 @@ export default function OrderFormPage() {
 			good: goodRef.current.value,
 			date: Date.now(),
 		}
-		console.log('newOrder: ', newOrder)
 
 		createOrder(newOrder)
-
 		history.push(`/`)
 	}
 
 	return (
 		<div
-			className="d-flex justify-content-center"
+			className='d-flex justify-content-center'
 			style={{ height: '100vh' }}
 		>
-			<div className="d-flex flex-column justify-content-center">
-				<div className="card" style={{ width: '500px' }}>
-					<div className="card-header">
+			<div className='d-flex flex-column justify-content-center'>
+				<div className='card' style={{ width: '500px' }}>
+					<div className='card-header'>
 						<h2>Новый заказ</h2>
 					</div>
-					<div className="card-body">
-						<div className="form-group row">
-							<label className="col-sm-2 col-form-label">
+					<div className='card-body'>
+						<div className='form-group row'>
+							<label className='col-sm-2 col-form-label'>
 								ФИО:
 							</label>
-							<div className="col-sm-10">
+							<div className='col-sm-10'>
 								<input
 									ref={fullnameRef}
-									type="text"
-									className="form-control"
-									defaultValue="Сергей Лазонка"
-									placeholder="Сергей Лазонка"
+									type='text'
+									className='form-control'
+									placeholder='Иван Иванов'
 								/>
 							</div>
 						</div>
-						<div className="form-group row">
-							<label className="col-sm-2 col-form-label">
+						<div className='form-group row'>
+							<label className='col-sm-2 col-form-label'>
 								Заказ:
 							</label>
-							<div className="col-sm-10">
-								<select ref={goodRef} className="form-control">
+							<div className='col-sm-10'>
+								<select ref={goodRef} className='form-control'>
 									<option defaultValue>
 										Бумага для принтера
 									</option>
@@ -72,16 +64,16 @@ export default function OrderFormPage() {
 								</select>
 							</div>
 						</div>
-						<div className="form-group row">
-							<label className="col-sm-2 col-form-label">
+						<div className='form-group row'>
+							<label className='col-sm-2 col-form-label'>
 								Цена:
 							</label>
-							<div className="col-sm-10">
+							<div className='col-sm-10'>
 								<input
-									type="number"
-									className="form-control"
-									defaultValue="0"
-									min="0"
+									type='number'
+									className='form-control'
+									defaultValue='0'
+									min='0'
 									ref={priceRef}
 									data-order-price
 								/>
@@ -89,9 +81,15 @@ export default function OrderFormPage() {
 						</div>
 					</div>
 
-					<div className="card-footer d-flex justify-content-end">
-						<button className="btn btn-success" onClick={makeOrder}>
+					<div className='card-footer d-flex justify-content-end'>
+						<button className='btn btn-success' onClick={makeOrder}>
 							Отправить
+						</button>
+						<button
+							className='btn btn-danger ml-3'
+							onClick={() => history.push(`/`)}
+						>
+							Отмена
 						</button>
 					</div>
 				</div>
