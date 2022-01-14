@@ -1,20 +1,33 @@
 import React from 'react'
 
-export default function Pagination({ onPagination, currentPage, commonPages }) {
+export default function Pagination(props) {
+	const { onPagination, currentPage, commonPages } = props
+
+	if (commonPages <= 1) {
+		return null
+	}
+
 	// Элемент пагинации с номером страницы.
-	const PaginationItem = props => (
-		<li
-			className={
-				'page-item ' +
-				(props.currentPage === props.pageNumber ? 'active' : '')
-			}
-			onClick={() => onPagination(props.pageNumber)}
-		>
-			<button className="page-link" href="/">
-				{props.pageNumber}
-			</button>
-		</li>
-	)
+	const PaginationItem = props => {
+		const { pageNumber, currentPage } = props
+
+		return (
+			<li
+				className={
+					'page-item ' + (currentPage === pageNumber ? 'active' : '')
+				}
+			>
+				<button
+					onClick={() => {
+						onPagination(pageNumber)
+					}}
+					className='page-link'
+				>
+					{pageNumber}
+				</button>
+			</li>
+		)
+	}
 
 	// Кнопки пагинации.
 	const paginationItems = []
@@ -27,19 +40,17 @@ export default function Pagination({ onPagination, currentPage, commonPages }) {
 	}
 
 	return (
-		<nav aria-label="Page navigation example">
-			<ul className="pagination justify-content-center">
+		<nav aria-label='Page navigation example'>
+			<ul className='pagination justify-content-center'>
 				<li
 					className={`page-item ${
 						currentPage === 1 ? 'disabled' : ''
 					}`}
-					onClick={onPagination('prev')}
 				>
 					<button
-						className="page-link"
-						href="/"
-						tabIndex="-1"
-						aria-disabled="true"
+						className='page-link'
+						onClick={() => onPagination('prev')}
+						aria-disabled='true'
 					>
 						Назад
 					</button>
@@ -51,9 +62,11 @@ export default function Pagination({ onPagination, currentPage, commonPages }) {
 					className={`page-item ${
 						currentPage === commonPages ? 'disabled' : ''
 					}`}
-					onClick={onPagination('next')}
 				>
-					<button className="page-link" href="/">
+					<button
+						className='page-link'
+						onClick={() => onPagination('next')}
+					>
 						Вперед
 					</button>
 				</li>

@@ -28,7 +28,7 @@ export default function ManagerPage({ page }) {
 	const offset = (currentPage - 1) * limit
 
 	const orders = getOrders(offset, ordersAmount)
-	console.log('orders: ', orders)
+	// console.log('orders: ', orders)
 	// Заказы после фильтра.
 	const [displayedOrders, setDisplayedOrders] = useState([...orders])
 	// Заказы, которые должны отрисоваться на странице при пагинации.
@@ -113,10 +113,12 @@ export default function ManagerPage({ page }) {
 
 	const handlerPagination = nextPage => {
 		if (nextPage === 'prev') {
+			// console.log('prev')
 			setCurrentPage(currentPage => currentPage - 1)
 		} else if (nextPage === 'next') {
 			setCurrentPage(currentPage => currentPage + 1)
 		} else if (typeof nextPage === 'number') {
+			// console.log('number')
 			setCurrentPage(nextPage)
 		}
 	}
@@ -142,11 +144,11 @@ export default function ManagerPage({ page }) {
 	return (
 		<MainWrapper>
 			<main
-				role="main"
-				className="col-md-9 ml-sm-auto col-lg-10 px-4 d-flex flex-column"
+				role='main'
+				className='col-md-9 ml-sm-auto col-lg-10 px-4 d-flex flex-column'
 			>
-				<div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-					<h1 className="h2">Заказы</h1>
+				<div className='d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom'>
+					<h1 className='h2'>Заказы</h1>
 				</div>
 
 				<Filters onFilter={handlerFilter} />
