@@ -1,6 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
+const sitePath = window.location.protocol + '//' + window.location.host
+
 export default function Nav() {
 	return (
 		<nav
@@ -25,9 +27,10 @@ export default function Nav() {
 					<li className='nav-item'>
 						<a className='nav-link active' href='/'>
 							<img
-								src='./assets/data-collection.png'
+								src={sitePath + '/assets/data-collection.png'}
 								alt=''
 								style={{ width: '30px' }}
+								className='mr-2'
 							/>
 							Все заказы
 						</a>
@@ -35,9 +38,10 @@ export default function Nav() {
 					<li className='nav-item'>
 						<a className='nav-link' href='/'>
 							<img
-								src='./assets/new.png'
+								src={sitePath + '/assets/new.png'}
 								alt=''
 								style={{ width: '30px' }}
+								className='mr-2'
 							/>
 							Новые
 						</a>
@@ -45,9 +49,10 @@ export default function Nav() {
 					<li className='nav-item'>
 						<a className='nav-link' href='/'>
 							<img
-								src='./assets/innovation.png'
+								src={sitePath + '/assets/innovation.png'}
 								alt=''
 								style={{ width: '30px' }}
+								className='mr-2'
 							/>
 							На исполнение
 						</a>
@@ -55,9 +60,10 @@ export default function Nav() {
 					<li className='nav-item'>
 						<a className='nav-link' href='/'>
 							<img
-								src='./assets/back.png'
+								src={sitePath + '/assets/back.png'}
 								alt=''
 								style={{ width: '30px' }}
+								className='mr-2'
 							/>
 							Возврат
 						</a>
@@ -65,9 +71,10 @@ export default function Nav() {
 					<li className='nav-item'>
 						<a className='nav-link' href='/'>
 							<img
-								src='./assets/compressed.png'
+								src={sitePath + '/assets/compressed.png'}
 								alt=''
 								style={{ width: '30px' }}
+								className='mr-2'
 							/>
 							Заархивированные
 						</a>
@@ -81,9 +88,10 @@ export default function Nav() {
 					<li className='nav-item'>
 						<a className='nav-link' href='/'>
 							<img
-								src='./assets/arrow.png'
+								src={sitePath + '/assets/arrow.png'}
 								alt=''
 								style={{ width: '30px' }}
+								className='mr-2'
 							/>
 							Максим Анатольевич
 						</a>
@@ -91,9 +99,10 @@ export default function Nav() {
 					<li className='nav-item'>
 						<a className='nav-link' href='/'>
 							<img
-								src='./assets/arrow.png'
+								src={sitePath + '/assets/arrow.png'}
 								alt=''
 								style={{ width: '30px' }}
+								className='mr-2'
 							/>
 							Серьгей Дмитриевич
 						</a>
@@ -101,9 +110,10 @@ export default function Nav() {
 					<li className='nav-item'>
 						<a className='nav-link' href='/'>
 							<img
-								src='./assets/arrow.png'
+								src={sitePath + '/assets/arrow.png'}
 								alt=''
 								style={{ width: '30px' }}
+								className='mr-2'
 							/>
 							Ольга Арбузова
 						</a>
@@ -111,9 +121,10 @@ export default function Nav() {
 					<li className='nav-item'>
 						<a className='nav-link' href='/'>
 							<img
-								src='./assets/arrow.png'
+								src={sitePath + '/assets/arrow.png'}
 								alt=''
 								style={{ width: '30px' }}
+								className='mr-2'
 							/>
 							Максимус Валькиш
 						</a>
