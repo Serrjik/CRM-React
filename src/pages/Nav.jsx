@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import Context from '../database/Context'
 
 const sitePath = window.location.protocol + '//' + window.location.host
@@ -8,6 +8,13 @@ export default function Nav() {
 	const value = useContext(Context)
 	const lastReviewedOrdersIDs = value.state.lastReviewed.orderIds
 	const getOrderById = value.getOrderById
+
+	const history = useHistory()
+
+	const handlerEdit = orderId => {
+		console.log('edit')
+		history.push(`/editor/${orderId}`)
+	}
 
 	return (
 		<nav
@@ -95,20 +102,9 @@ export default function Nav() {
 							id={id}
 							key={id}
 							fullname={getOrderById(id).fullname}
+							// onEdit={handlerEdit}
 						/>
 					))}
-
-					<li className='nav-item'>
-						<a className='nav-link' href='/'>
-							<img
-								src={sitePath + '/assets/arrow.png'}
-								alt=''
-								style={{ width: '30px' }}
-								className='mr-2'
-							/>
-							Максим Анатольевич
-						</a>
-					</li>
 				</ul>
 			</div>
 		</nav>
@@ -116,10 +112,12 @@ export default function Nav() {
 }
 
 const Li = props => {
-	const { id, fullname } = props
+	const { id, fullname, onEdit } = props
 
 	return (
+		// <li className='nav-item' onClick={() => onEdit(id)}>
 		<li className='nav-item'>
+			{/* <button className='nav-link'> */}
 			<Link className='nav-link' to={`/editor/${id}`}>
 				<img
 					src={sitePath + '/assets/arrow.png'}
@@ -128,6 +126,7 @@ const Li = props => {
 					className='mr-2'
 				/>
 				{fullname}
+			{/* </button> */}
 			</Link>
 		</li>
 	)

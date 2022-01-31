@@ -1,10 +1,13 @@
 import React, { useReducer } from 'react'
-import orders from './orders.json'
+// import orders from './orders.json'
 import reducer from './reducer'
 import { UPDATE_ORDER, CREATE_ORDER } from './Boilerplate'
 import Context from './Context'
 
 const withoutId = ({ id, ...data }) => data
+
+// localStorage.setItem('CRM_REACT_ORDERS', JSON.stringify(orders))
+const orders = JSON.parse(localStorage.getItem('CRM_REACT_ORDERS'))
 
 export function DatabaseProvider(props) {
 	const [state, dispatch] = useReducer(reducer, {
