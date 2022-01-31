@@ -1,9 +1,14 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
+import Context from '../database/Context'
 
 const sitePath = window.location.protocol + '//' + window.location.host
 
 export default function Nav() {
+	const value = useContext(Context)
+	const lastReviewedOrdersIDs = value.state.lastReviewed.orderIds
+	const getOrderById = value.getOrderById
+
 	return (
 		<nav
 			className='col-md-2 d-none d-md-block bg-light sidebar'
@@ -85,6 +90,14 @@ export default function Nav() {
 					Последние просматриваемые
 				</h6>
 				<ul className='nav flex-column mb-2'>
+					{lastReviewedOrdersIDs.map(id => (
+						<Li
+							id={id}
+							key={id}
+							fullname={getOrderById(id).fullname}
+						/>
+					))}
+
 					<li className='nav-item'>
 						<a className='nav-link' href='/'>
 							<img
@@ -96,41 +109,26 @@ export default function Nav() {
 							Максим Анатольевич
 						</a>
 					</li>
-					<li className='nav-item'>
-						<a className='nav-link' href='/'>
-							<img
-								src={sitePath + '/assets/arrow.png'}
-								alt=''
-								style={{ width: '30px' }}
-								className='mr-2'
-							/>
-							Серьгей Дмитриевич
-						</a>
-					</li>
-					<li className='nav-item'>
-						<a className='nav-link' href='/'>
-							<img
-								src={sitePath + '/assets/arrow.png'}
-								alt=''
-								style={{ width: '30px' }}
-								className='mr-2'
-							/>
-							Ольга Арбузова
-						</a>
-					</li>
-					<li className='nav-item'>
-						<a className='nav-link' href='/'>
-							<img
-								src={sitePath + '/assets/arrow.png'}
-								alt=''
-								style={{ width: '30px' }}
-								className='mr-2'
-							/>
-							Максимус Валькиш
-						</a>
-					</li>
 				</ul>
 			</div>
 		</nav>
+	)
+}
+
+const Li = props => {
+	const { id, fullname } = props
+
+	return (
+		<li className='nav-item'>
+			<Link className='nav-link' to={`/editor/${id}`}>
+				<img
+					src={sitePath + '/assets/arrow.png'}
+					alt=''
+					style={{ width: '30px' }}
+					className='mr-2'
+				/>
+				{fullname}
+			</Link>
+		</li>
 	)
 }

@@ -47,7 +47,6 @@ export default function OrderManagerPage() {
 			good: inputGoodRef.current.value,
 			date: inputDateRef.current.value,
 		}
-		console.log('updatedOrder: ', updatedOrder)
 
 		updateOrder(order.id, updatedOrder)
 		history.push(`/`)
