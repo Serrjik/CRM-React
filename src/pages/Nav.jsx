@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import Context from '../database/Context'
 
 const sitePath = window.location.protocol + '//' + window.location.host
@@ -9,12 +9,12 @@ export default function Nav() {
 	const lastReviewedOrdersIDs = value.state.lastReviewed.orderIds
 	const getOrderById = value.getOrderById
 
-	const history = useHistory()
+	// const history = useHistory()
 
-	const handlerEdit = orderId => {
-		console.log('edit')
-		history.push(`/editor/${orderId}`)
-	}
+	// const handlerEdit = orderId => {
+	// 	console.log('edit')
+	// 	history.push(`/editor/${orderId}`)
+	// }
 
 	return (
 		<nav
@@ -112,7 +112,7 @@ export default function Nav() {
 }
 
 const Li = props => {
-	const { id, fullname, onEdit } = props
+	const { id, fullname } = props
 
 	return (
 		// <li className='nav-item' onClick={() => onEdit(id)}>
@@ -126,7 +126,7 @@ const Li = props => {
 					className='mr-2'
 				/>
 				{fullname}
-			{/* </button> */}
+				{/* </button> */}
 			</Link>
 		</li>
 	)
