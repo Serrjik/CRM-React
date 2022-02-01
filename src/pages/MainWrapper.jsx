@@ -6,7 +6,7 @@ export default function MainWrapper(props) {
 	return (
 		<div className='container-fluid'>
 			<div className='row'>
-				<Nav />
+				<Nav setStatus={props.setStatus} />
 				{props.children}
 			</div>
 		</div>

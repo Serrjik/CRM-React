@@ -4,17 +4,25 @@ import Context from '../database/Context'
 
 const sitePath = window.location.protocol + '//' + window.location.host
 
-export default function Nav() {
+export default function Nav(props) {
 	const value = useContext(Context)
 	const lastReviewedOrdersIDs = value.state.lastReviewed.orderIds
 	const getOrderById = value.getOrderById
 
-	// const history = useHistory()
+	const { setStatus } = props
 
-	// const handlerEdit = orderId => {
-	// 	console.log('edit')
-	// 	history.push(`/editor/${orderId}`)
-	// }
+	/* Для кнопок режимов отображения заказов. */
+	const modeButtons = [
+		{ status: 'new', caption: 'Новые', image: 'new' },
+		{ status: 'process', caption: 'На исполнение', image: 'innovation' },
+		{ status: 'back', caption: 'Возврат', image: 'back' },
+		{
+			status: 'archived',
+			caption: 'Заархивированные',
+			image: 'compressed',
+		},
+	]
+	console.log('modeButtons: ', modeButtons)
 
 	return (
 		<nav
@@ -47,50 +55,16 @@ export default function Nav() {
 							Все заказы
 						</a>
 					</li>
-					<li className='nav-item'>
-						<a className='nav-link' href='/'>
-							<img
-								src={sitePath + '/assets/new.png'}
-								alt=''
-								style={{ width: '30px' }}
-								className='mr-2'
-							/>
-							Новые
-						</a>
-					</li>
-					<li className='nav-item'>
-						<a className='nav-link' href='/'>
-							<img
-								src={sitePath + '/assets/innovation.png'}
-								alt=''
-								style={{ width: '30px' }}
-								className='mr-2'
-							/>
-							На исполнение
-						</a>
-					</li>
-					<li className='nav-item'>
-						<a className='nav-link' href='/'>
-							<img
-								src={sitePath + '/assets/back.png'}
-								alt=''
-								style={{ width: '30px' }}
-								className='mr-2'
-							/>
-							Возврат
-						</a>
-					</li>
-					<li className='nav-item'>
-						<a className='nav-link' href='/'>
-							<img
-								src={sitePath + '/assets/compressed.png'}
-								alt=''
-								style={{ width: '30px' }}
-								className='mr-2'
-							/>
-							Заархивированные
-						</a>
-					</li>
+
+					{modeButtons.map(({ status, image, caption }) => (
+						<LiModeButtons
+							key={status}
+							status={status}
+							setStatus={setStatus}
+							img={image}
+							caption={caption}
+						/>
+					))}
 				</ul>
 
 				<h6 className='sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted'>
@@ -102,7 +76,6 @@ export default function Nav() {
 							id={id}
 							key={id}
 							fullname={getOrderById(id).fullname}
-							// onEdit={handlerEdit}
 						/>
 					))}
 				</ul>
@@ -111,13 +84,37 @@ export default function Nav() {
 	)
 }
 
+const LiModeButtons = props => {
+	const { status, img, setStatus, caption } = props
+
+	return (
+		<li className='nav-item'>
+			<button
+				className='nav-link text-left'
+				onClick={() => setStatus(status)}
+				style={{
+					width: '100%',
+					border: 'none',
+					backgroundColor: 'transparent',
+				}}
+			>
+				<img
+					src={sitePath + `/assets/${img}.png`}
+					alt=''
+					style={{ width: '30px' }}
+					className='mr-2'
+				/>
+				{caption}
+			</button>
+		</li>
+	)
+}
+
 const Li = props => {
 	const { id, fullname } = props
 
 	return (
-		// <li className='nav-item' onClick={() => onEdit(id)}>
 		<li className='nav-item'>
-			{/* <button className='nav-link'> */}
 			<Link className='nav-link' to={`/editor/${id}`}>
 				<img
 					src={sitePath + '/assets/arrow.png'}
@@ -126,7 +123,6 @@ const Li = props => {
 					className='mr-2'
 				/>
 				{fullname}
-				{/* </button> */}
 			</Link>
 		</li>
 	)

@@ -12,6 +12,8 @@ import { useHistory } from 'react-router-dom'
 import Context from '../../database/Context'
 
 export default function ManagerPage({ page }) {
+	const [status, setStatus] = useState('')
+
 	// Пагинация.
 	const [currentPage, setCurrentPage] = useState(1)
 
@@ -142,7 +144,7 @@ export default function ManagerPage({ page }) {
 	// console.log('currentPage: ', currentPage)
 
 	return (
-		<MainWrapper>
+		<MainWrapper setStatus={setStatus}>
 			<main
 				role='main'
 				className='col-md-9 ml-sm-auto col-lg-10 px-4 d-flex flex-column'
@@ -151,7 +153,11 @@ export default function ManagerPage({ page }) {
 					<h1 className='h2'>Заказы</h1>
 				</div>
 
-				<Filters onFilter={handlerFilter} />
+				<Filters
+					onFilter={handlerFilter}
+					status={status}
+					setStatus={setStatus}
+				/>
 				<OrderTable onEdit={handlerEdit} orders={paginatedOrders} />
 				<Pagination
 					onPagination={handlerPagination}

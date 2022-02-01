@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 
 export default function Filters(props) {
-	const { onFilter } = props
+	const { onFilter, status, setStatus } = props
 
 	const [userName, setUserName] = useState('')
 	const [order, setOrder] = useState('')
-	const [status, setStatus] = useState('')
+	// const [status, setStatus] = useState('')
 	const [minPrice, setMinPrice] = useState('')
 	const [maxPrice, setMaxPrice] = useState('')
 	const [startDate, setStartDate] = useState('')
