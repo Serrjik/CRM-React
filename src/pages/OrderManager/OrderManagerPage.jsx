@@ -1,5 +1,5 @@
 // Редактирование заказа.
-import React, { useRef } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 
 import { useParams } from 'react-router-dom'
 
@@ -43,14 +43,33 @@ export default function OrderManagerPage() {
 	const makeUpdateOrder = () => {
 		const updatedOrder = {
 			fullname: inputFullnameRef.current.value,
-			status: inputStatusRef.current.value,
 			good: inputGoodRef.current.value,
 			date: inputDateRef.current.value,
+			status: inputStatusRef.current.value,
 		}
 
 		updateOrder(order.id, updatedOrder)
 		history.push(`/`)
 	}
+
+	const [fullName, setFullNameValue] = useState(order.fullname)
+	const [good, setGoodValue] = useState(order.good)
+	const [dateValue, setDateValue] = useState(date)
+	const [status, setStatus] = useState(order.status)
+
+	const fillingTheForm = useCallback(
+		(fullName, good, dateValue, status) => {
+			setFullNameValue(order.fullname)
+			setGoodValue(order.good)
+			setDateValue(date)
+			setStatus(order.status)
+		},
+		[order.fullname, order.good, date, order.status]
+	)
+
+	useEffect(() => {
+		fillingTheForm()
+	}, [fillingTheForm, order.fullname, order.good, date, order.status])
 
 	return (
 		<MainWrapper>
@@ -85,7 +104,10 @@ export default function OrderManagerPage() {
 									ref={inputFullnameRef}
 									type='text'
 									className='form-control'
-									defaultValue={order.fullname}
+									value={fullName}
+									onChange={e =>
+										setFullNameValue(e.target.value)
+									}
 								/>
 							</div>
 						</div>
@@ -97,7 +119,8 @@ export default function OrderManagerPage() {
 								<select
 									ref={inputGoodRef}
 									className='form-control'
-									defaultValue={order.good}
+									value={good}
+									onChange={e => setGoodValue(e.target.value)}
 								>
 									{goods.map(good => (
 										<option
@@ -118,7 +141,8 @@ export default function OrderManagerPage() {
 									ref={inputDateRef}
 									type='date'
 									className='form-control'
-									defaultValue={date}
+									value={dateValue}
+									onChange={e => setDateValue(e.target.value)}
 								/>
 							</div>
 						</div>
@@ -130,7 +154,8 @@ export default function OrderManagerPage() {
 								<select
 									ref={inputStatusRef}
 									className='form-control'
-									defaultValue={order.status}
+									value={status}
+									onChange={e => setStatus(e.target.value)}
 								>
 									{statuses.map(status => (
 										<option
