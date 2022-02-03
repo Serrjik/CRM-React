@@ -11,7 +11,6 @@ export default function Nav(props) {
 	const getOrderById = value.getOrderById
 
 	const match = useRouteMatch({ path: '/', strict: true })
-	console.log('match: ', match)
 
 	const { setStatus } = props
 

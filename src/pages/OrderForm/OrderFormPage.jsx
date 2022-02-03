@@ -10,18 +10,29 @@ export default function OrderFormPage() {
 	const fullnameRef = useRef()
 	const goodRef = useRef()
 	const priceRef = useRef()
+	const cardWarningRef = useRef()
 
 	const makeOrder = () => {
-		const newOrder = {
-			fullname: fullnameRef.current.value,
-			status: 'new',
-			price: priceRef.current.value,
-			good: goodRef.current.value,
-			date: Date.now(),
-		}
+		console.log(parseInt(priceRef.current.value.trim(), 10))
 
-		createOrder(newOrder)
-		history.push(`/`)
+		if (
+			fullnameRef.current.value.trim() !== '' &&
+			parseInt(priceRef.current.value.trim(), 10) > 0 &&
+			goodRef.current.value.trim() !== ''
+		) {
+			const newOrder = {
+				fullname: fullnameRef.current.value,
+				status: 'new',
+				price: priceRef.current.value,
+				good: goodRef.current.value,
+				date: Date.now(),
+			}
+
+			createOrder(newOrder)
+			history.push(`/`)
+		} else {
+			cardWarningRef.current.classList.add('show')
+		}
 	}
 
 	return (
@@ -35,6 +46,24 @@ export default function OrderFormPage() {
 						<h2>Новый заказ</h2>
 					</div>
 					<div className='card-body'>
+						<div
+							ref={cardWarningRef}
+							className='alert alert-warning alert-dismissible fade'
+							role='alert'
+						>
+							<strong>Заполните все поля!</strong>
+							<br />
+							Цена должна быть больше нуля.
+							<button
+								type='button'
+								className='close'
+								data-dismiss='alert'
+								aria-label='Close'
+							>
+								<span aria-hidden='true'>&times;</span>
+							</button>
+						</div>
+
 						<div className='form-group row'>
 							<label className='col-sm-2 col-form-label'>
 								ФИО:
