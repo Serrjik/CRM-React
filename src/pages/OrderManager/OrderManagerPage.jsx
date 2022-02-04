@@ -37,19 +37,28 @@ export default function OrderManagerPage() {
 	const inputGoodRef = useRef()
 	const inputDateRef = useRef()
 	const inputStatusRef = useRef()
+	const cardWarningRef = useRef()
 
 	const { updateOrder } = useDatabase()
 
 	const makeUpdateOrder = () => {
-		const updatedOrder = {
-			fullname: inputFullnameRef.current.value,
-			good: inputGoodRef.current.value,
-			date: inputDateRef.current.value,
-			status: inputStatusRef.current.value,
-		}
+		if (
+			inputFullnameRef.current.value.trim() !== '' &&
+			inputDateRef.current.value.trim() !== ''
+		) {
+			const updatedOrder = {
+				fullname: inputFullnameRef.current.value,
+				good: inputGoodRef.current.value,
+				date: inputDateRef.current.value,
+				status: inputStatusRef.current.value,
+			}
+			console.log('updatedOrder: ', updatedOrder)
 
-		updateOrder(order.id, updatedOrder)
-		history.push(`/`)
+			updateOrder(order.id, updatedOrder)
+			history.push(`/`)
+		} else {
+			window.$(cardWarningRef.current).removeClass('js-hidden')
+		}
 	}
 
 	const [fullName, setFullNameValue] = useState(order.fullname)
@@ -82,6 +91,14 @@ export default function OrderManagerPage() {
 						<h2>{order.fullname}</h2>
 					</div>
 					<div className='card-body'>
+						<div
+							ref={cardWarningRef}
+							className='alert alert-danger alert-dismissible show fade js-hidden'
+							role='alert'
+						>
+							<strong>Заполните все поля!</strong>
+						</div>
+
 						<div className='form-group row'>
 							<label className='col-sm-1 col-form-label'>
 								ID:
