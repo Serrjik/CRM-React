@@ -49,10 +49,9 @@ export default function OrderManagerPage() {
 			const updatedOrder = {
 				fullname: inputFullnameRef.current.value,
 				good: inputGoodRef.current.value,
-				date: inputDateRef.current.value,
+				date: new Date(inputDateRef.current.value).getTime(),
 				status: inputStatusRef.current.value,
 			}
-			console.log('updatedOrder: ', updatedOrder)
 
 			updateOrder(order.id, updatedOrder)
 			history.push(`/`)

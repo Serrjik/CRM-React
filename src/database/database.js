@@ -6,18 +6,32 @@ import Context from './Context'
 
 const withoutId = ({ id, ...data }) => data
 
-// localStorage.setItem('CRM_REACT_ORDERS', JSON.stringify(orders))
-const orders = JSON.parse(localStorage.getItem('CRM_REACT_ORDERS'))
+// localStorage.setItem(
+// 'CRM_REACT_ORDERS',
+// JSON.stringify({
+// orders: orders,
+// lastReviewed: {
+// maxLength: 4,
+// orderIds: [1, 2, 3, 4],
+// },
+// })
+// )
+const orders = JSON.parse(localStorage.getItem('CRM_REACT_ORDERS')).orders
+const lastReviewed = JSON.parse(
+	localStorage.getItem('CRM_REACT_ORDERS')
+).lastReviewed
 
 export function DatabaseProvider(props) {
 	const [state, dispatch] = useReducer(reducer, {
-		lastReviewed: {
-			maxLength: 4,
-			orderIds: [1, 2, 3, 4],
-		},
+		// lastReviewed: {
+		// maxLength: 4,
+		// orderIds: [1, 2, 3, 4],
+		// },
+		lastReviewed,
 		maxOrders: 10,
 		orders,
 	})
+	// console.log('state.orders: ', state.orders)
 
 	const getOrders = (offset = 0, limit = 10) =>
 		state.orders.slice(offset, offset + limit)
