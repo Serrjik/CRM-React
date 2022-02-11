@@ -1,2 +1,3 @@
 # CRM-React
-Created with CodeSandbox
+
+Собранный проект: https://serrjik.github.io/CRM-React/
