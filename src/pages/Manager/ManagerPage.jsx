@@ -18,6 +18,7 @@ export default function ManagerPage({ page }) {
 	const [currentPage, setCurrentPage] = useState(1)
 
 	const value = useContext(Context)
+
 	// Максимальное количество заказов на странице.
 	const limit = value.state.maxOrders
 
@@ -30,7 +31,7 @@ export default function ManagerPage({ page }) {
 	const offset = (currentPage - 1) * limit
 
 	const orders = getOrders(offset, ordersAmount)
-	// console.log('orders: ', orders)
+
 	// Заказы после фильтра.
 	const [displayedOrders, setDisplayedOrders] = useState([...orders])
 	// Заказы, которые должны отрисоваться на странице при пагинации.
@@ -53,8 +54,6 @@ export default function ManagerPage({ page }) {
 		// id: 1
 		// price: 500
 		// status: "process"
-
-		// console.log('filters: ', filters);
 
 		for (const filter of filters) {
 			if (filter.type === 'name') {
@@ -115,19 +114,16 @@ export default function ManagerPage({ page }) {
 
 	const handlerPagination = nextPage => {
 		if (nextPage === 'prev') {
-			// console.log('prev')
 			setCurrentPage(currentPage => currentPage - 1)
 		} else if (nextPage === 'next') {
 			setCurrentPage(currentPage => currentPage + 1)
 		} else if (typeof nextPage === 'number') {
-			// console.log('number')
 			setCurrentPage(nextPage)
 		}
 	}
 
 	// Количество страниц.
 	const commonPages = Math.ceil(displayedOrders.length / limit)
-	// console.log('commonPages: ', commonPages)
 
 	useEffect(
 		() =>
@@ -139,9 +135,6 @@ export default function ManagerPage({ page }) {
 			),
 		[displayedOrders, currentPage, limit]
 	)
-
-	// console.log('displayedOrders: ', displayedOrders)
-	// console.log('currentPage: ', currentPage)
 
 	return (
 		<MainWrapper setStatus={setStatus}>

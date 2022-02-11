@@ -13,8 +13,6 @@ export default function OrderFormPage() {
 	const cardWarningRef = useRef()
 
 	const makeOrder = () => {
-		console.log(parseInt(priceRef.current.value.trim(), 10))
-
 		if (
 			fullnameRef.current.value.trim() !== '' &&
 			parseInt(priceRef.current.value.trim(), 10) > 0 &&
